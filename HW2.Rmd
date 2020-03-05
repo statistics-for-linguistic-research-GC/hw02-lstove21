@@ -1,0 +1,33 @@
+---
+title: "HW2"
+author: "LeeAnn Stover"
+date: "3/4/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Reporting a binomial test
+
+```{r}
+prep <- 501
+doubobj <- 1859
+binom.test(doubobj, (prep + doubobj), .5)
+```
+
+##### Out of 2360 dative constructions uttered during spontaneous phone conversations, 1,859 double objects were found. If the null hypothesis posits a 50% probability of double object constructions, the null hypothesis can be rejected given this data. probability of success: 78.8%, CI: 0.77 - 0.80, p < .001
+
+### McNemar's test
+```{r}
+df <- read.csv("~/Desktop/GraduateCenter/Stats/PTB.tsv", sep = "\t", header = TRUE)
+Stan.correct <- df$Stanford.tag == df$gold.tag
+NLP4J.correct <- df$NLP4J.tag == df$gold.tag
+x1 <- sum(Stan.correct & !NLP4J.correct)
+x2 <- sum(NLP4J.correct & !Stan.correct)
+print(x1)
+print(x2)
+binom.test(min(x1, x2), (x1 + x2), 0.5)
+```
+##### Stanford wins = 943, NLP4J wins = 1016. The null hypothesis cannot be rejected: Neither tagger performs better than the other. 
